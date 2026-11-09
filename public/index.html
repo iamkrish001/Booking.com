@@ -10,6 +10,20 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@300;400;500;600;700&display=swap" />
   <link rel="stylesheet" href="/css/styles.css" />
+  <meta name="theme-color" content="#f6f3ee" />
+  <script>
+    // Apply the saved theme before first paint to avoid a flash of the wrong colours.
+    (function () {
+      try {
+        var pref = localStorage.getItem('hs_theme') || 'system';
+        var dark = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches;
+        var theme = pref === 'system' ? (dark ? 'charcoal' : 'light') : pref;
+        var root = document.documentElement;
+        root.setAttribute('data-theme', theme);
+        if (theme !== 'light') root.classList.add('dark');
+      } catch (e) { /* storage unavailable */ }
+    })();
+  </script>
 </head>
 <body>
   <header class="site-header">

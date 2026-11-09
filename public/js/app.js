@@ -39,6 +39,8 @@
     ruler: '<path d="M3 17 17 3l4 4L7 21z"/><path d="m7 13 2 2M10 10l2 2M13 7l2 2"/>',
     users: '<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6M16 4.6a3.5 3.5 0 0 1 0 6.8M18.5 14.4c1.8.8 3 2.9 3 5.6"/>',
     bookmark: '<path d="M6 3h12v18l-6-4.5L6 21z"/>',
+    sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
+    moon: '<path d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11z"/>',
   };
   function icon(name, cls = '') {
     return `<svg class="i ${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[name] || ''}</svg>`;
@@ -124,6 +126,72 @@
   const errorBox = (msg) => `<div class="alert alert-error">${esc(msg)}</div>`;
 
   // ======================================================================
+  // Theme (light / charcoal / midnight / follow system)
+  // ======================================================================
+
+  const THEMES = [
+    { id: 'system', label: 'Match device', swatch: 'linear-gradient(135deg, #f6f3ee 50%, #141312 50%)' },
+    { id: 'light', label: 'Light', swatch: '#f6f3ee', meta: '#f6f3ee' },
+    { id: 'charcoal', label: 'Charcoal', swatch: '#1c1b19', meta: '#141312' },
+    { id: 'midnight', label: 'Midnight', swatch: '#11172b', meta: '#0b1020' },
+  ];
+  const darkQuery = window.matchMedia ? matchMedia('(prefers-color-scheme: dark)') : null;
+
+  function themePref() {
+    try { return localStorage.getItem('hs_theme') || 'system'; } catch { return 'system'; }
+  }
+  function resolvedTheme(pref = themePref()) {
+    if (pref === 'system') return darkQuery && darkQuery.matches ? 'charcoal' : 'light';
+    return THEMES.some((t) => t.id === pref) ? pref : 'light';
+  }
+  function applyTheme() {
+    const theme = resolvedTheme();
+    const root = document.documentElement;
+    root.setAttribute('data-theme', theme);
+    root.classList.toggle('dark', theme !== 'light');
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.setAttribute('content', THEMES.find((t) => t.id === theme).meta);
+    const btn = $('#theme-btn');
+    if (btn) btn.innerHTML = icon(theme === 'light' ? 'sun' : 'moon');
+  }
+  function setTheme(pref) {
+    try { localStorage.setItem('hs_theme', pref); } catch { /* ignore */ }
+    applyTheme();
+    renderHeader();
+  }
+  if (darkQuery) {
+    const onChange = () => { if (themePref() === 'system') applyTheme(); };
+    if (darkQuery.addEventListener) darkQuery.addEventListener('change', onChange);
+    else if (darkQuery.addListener) darkQuery.addListener(onChange);
+  }
+
+  function themePickerHtml() {
+    const pref = themePref();
+    return `
+      <div class="theme-wrap">
+        <button type="button" class="theme-btn" id="theme-btn" aria-haspopup="true" aria-expanded="false" aria-label="Change theme" title="Theme">${icon(resolvedTheme() === 'light' ? 'sun' : 'moon')}</button>
+        <div class="user-dropdown theme-dd hidden" id="theme-dd" role="menu">
+          <div class="dd-title">Appearance</div>
+          ${THEMES.map((t) => `<button type="button" role="menuitemradio" aria-checked="${pref === t.id}" data-theme-choice="${t.id}" class="${pref === t.id ? 'is-active' : ''}"><span class="swatch" style="background:${t.swatch}"></span><span class="label">${t.label}</span><span class="tick">${icon('check')}</span></button>`).join('')}
+        </div>
+      </div>`;
+  }
+
+  function wireThemePicker() {
+    const btn = $('#theme-btn'), dd = $('#theme-dd');
+    if (!btn) return;
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      $$('.user-dropdown').forEach((el) => { if (el !== dd) el.classList.add('hidden'); });
+      dd.classList.toggle('hidden');
+      btn.setAttribute('aria-expanded', String(!dd.classList.contains('hidden')));
+    });
+    $$('[data-theme-choice]', dd).forEach((b) => b.addEventListener('click', () => setTheme(b.dataset.themeChoice)));
+  }
+
+  applyTheme();
+
+  // ======================================================================
   // State
   // ======================================================================
 
@@ -154,6 +222,7 @@
       const initial = esc(state.user.name.trim().charAt(0).toUpperCase() || '?');
       nav.innerHTML = `
         <a class="nav-link optional" href="#/bookings">My bookings</a>
+        ${themePickerHtml()}
         <div class="user-menu">
           <button type="button" id="user-btn" aria-haspopup="true" aria-expanded="false">
             <span class="avatar">${initial}</span><span>${esc(state.user.name.split(' ')[0])}</span>
@@ -167,6 +236,7 @@
       const btn = $('#user-btn'), dd = $('#user-dd');
       btn.addEventListener('click', (e) => {
         e.stopPropagation();
+        $$('.user-dropdown').forEach((el) => { if (el !== dd) el.classList.add('hidden'); });
         dd.classList.toggle('hidden');
         btn.setAttribute('aria-expanded', String(!dd.classList.contains('hidden')));
       });
@@ -181,9 +251,11 @@
       const next = encodeURIComponent(currentPath());
       nav.innerHTML = `
         <a class="nav-link optional" href="#/manage">Manage booking</a>
+        ${themePickerHtml()}
         <a class="nav-link" href="#/register?next=${next}">Register</a>
         <a class="btn-white" href="#/login?next=${next}">Sign in</a>`;
     }
+    wireThemePicker();
   }
 
   function currentPath() { return location.hash.slice(1) || '/'; }

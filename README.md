@@ -17,6 +17,7 @@ There is no build step.
 - **Saved properties** (wishlist) with the heart button.
 - **Reviews**: signed-in guests who booked a property can review it once.
 - Minimal, warm design: Manrope for interface text and Instrument Serif for headlines (Google Fonts), with inline SVG line icons. The layout adapts to desktop and mobile.
+- **Themes**: Light, Charcoal (warm dark) and Midnight (navy dark), or match the device setting. Pick one from the sun/moon button in the header; the choice is remembered.
 
 > This is a demo. No payment is taken and no real reservations are made.
 
