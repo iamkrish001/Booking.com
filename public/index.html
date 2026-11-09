@@ -5,19 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>HotelSucher – Find and book hotels, apartments and more</title>
   <meta name="description" content="HotelSucher: search hotels, compare prices and book your next stay in seconds." />
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23003b95'/%3E%3Ctext x='16' y='23' font-family='Arial' font-weight='700' font-size='18' text-anchor='middle' fill='white'%3EH%3C/text%3E%3Ccircle cx='25' cy='23' r='3' fill='%23febb02'/%3E%3C/svg%3E" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%2315171a'/%3E%3Ctext x='16' y='22' font-family='Georgia,serif' font-style='italic' font-size='19' text-anchor='middle' fill='%23f6f3ee'%3Eh%3C/text%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@300;400;500;600;700&display=swap" />
   <link rel="stylesheet" href="/css/styles.css" />
 </head>
 <body>
   <header class="site-header">
     <div class="container header-row">
-      <a href="#/" class="logo" aria-label="HotelSucher home">Hotel<span>Sucher</span><i>.</i></a>
+      <a href="#/" class="logo" aria-label="HotelSucher home">hotel<em>sucher</em></a>
+      <nav class="header-tabs" aria-label="Main">
+        <a href="#/" class="tab active">Stays</a>
+        <a href="#/manage" class="tab">Find my booking</a>
+        <a href="#/wishlist" class="tab">Saved</a>
+        <a href="#/help" class="tab">Help</a>
+      </nav>
       <nav class="header-nav" id="header-nav" aria-label="Account"></nav>
-    </div>
-    <div class="container header-tabs">
-      <a href="#/" class="tab active">🛏️ Stays</a>
-      <a href="#/manage" class="tab">🔎 Find my booking</a>
-      <a href="#/wishlist" class="tab">♥ Saved</a>
     </div>
   </header>
 
@@ -26,7 +30,7 @@
   <footer class="site-footer">
     <div class="container footer-grid">
       <div>
-        <div class="logo logo-dark">Hotel<span>Sucher</span><i>.</i></div>
+        <div class="logo">hotel<em>sucher</em></div>
         <p class="muted">Find your perfect stay — hotels, apartments, hostels and more, all in one place.</p>
       </div>
       <div>

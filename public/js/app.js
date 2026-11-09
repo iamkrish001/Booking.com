@@ -10,6 +10,40 @@
   const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
   const app = $('#app');
 
+
+  // Minimal line icons (24×24, stroke-based).
+  const ICONS = {
+    search: '<circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>',
+    calendar: '<rect x="3" y="4.5" width="18" height="16" rx="2.5"/><path d="M3 9.5h18M8 2.5v4M16 2.5v4"/>',
+    user: '<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/>',
+    pin: '<path d="M12 21s-7-6.2-7-12a7 7 0 0 1 14 0c0 5.8-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/>',
+    heart: '<path d="M12 20s-7.5-4.6-9.3-9.2C1.4 7.4 3.6 4 7 4c2 0 3.4 1.1 5 3 1.6-1.9 3-3 5-3 3.4 0 5.6 3.4 4.3 6.8C19.5 15.4 12 20 12 20z"/>',
+    bed: '<path d="M3 19V6M3 14h18v5M21 14v-1a3 3 0 0 0-3-3h-8v4"/><circle cx="6.5" cy="10.5" r="1.8"/>',
+    check: '<path d="m5 12.5 4.5 4.5L19 7.5"/>',
+    coffee: '<path d="M4 8h13v5a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5V8z"/><path d="M17 10h1.5a2.5 2.5 0 0 1 0 5H17M8 2.5v2.5M12 2.5v2.5"/>',
+    arrowLeft: '<path d="M19 12H5M11 6l-6 6 6 6"/>',
+    arrowRight: '<path d="M5 12h14M13 6l6 6-6 6"/>',
+    printer: '<path d="M6 9V3h12v6"/><rect x="3" y="9" width="18" height="8" rx="2"/><path d="M7 14h10v7H7z"/>',
+    briefcase: '<rect x="3" y="7" width="18" height="13" rx="2.5"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 12.5h18"/>',
+    compass: '<circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5-5 2 2-5z"/>',
+    logout: '<path d="M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3M10 16l-4-4 4-4M6 12h10"/>',
+    sliders: '<path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/>',
+    euro: '<path d="M17.5 6.5a6.5 6.5 0 1 0 0 11M4 10h9M4 14h9"/>',
+    refresh: '<path d="M20 11a8 8 0 0 0-14.9-3.5M4 4v4h4M4 13a8 8 0 0 0 14.9 3.5M20 20v-4h-4"/>',
+    star: '<path d="m12 3 2.8 5.8 6.2.9-4.5 4.4 1 6.2L12 17.4l-5.5 2.9 1-6.2L3 9.7l6.2-.9z"/>',
+    hotel: '<rect x="4" y="3" width="16" height="18" rx="1.5"/><path d="M9.5 21v-4h5v4M8.5 7.5h.01M12 7.5h.01M15.5 7.5h.01M8.5 11.5h.01M12 11.5h.01M15.5 11.5h.01"/>',
+    apartment: '<path d="M3 21h18M5 21V8l7-4v17M12 21V9l7 3v9M8 10h.01M8 14h.01M15.5 14h.01M15.5 17h.01"/>',
+    resort: '<circle cx="12" cy="8.5" r="3.5"/><path d="M2 16c2.5 0 2.5-1.5 5-1.5s2.5 1.5 5 1.5 2.5-1.5 5-1.5 2.5 1.5 5 1.5M2 20.5c2.5 0 2.5-1.5 5-1.5s2.5 1.5 5 1.5 2.5-1.5 5-1.5 2.5 1.5 5 1.5"/>',
+    sparkles: '<path d="M11 3l1.7 5.3L18 10l-5.3 1.7L11 17l-1.7-5.3L4 10l5.3-1.7z"/><path d="M19 15l.7 2.3L22 18l-2.3.7L19 21l-.7-2.3L16 18l2.3-.7z"/>',
+    home: '<path d="M3 11 12 4l9 7"/><path d="M5 9.5V20h14V9.5"/><path d="M10 20v-5h4v5"/>',
+    ruler: '<path d="M3 17 17 3l4 4L7 21z"/><path d="m7 13 2 2M10 10l2 2M13 7l2 2"/>',
+    users: '<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6M16 4.6a3.5 3.5 0 0 1 0 6.8M18.5 14.4c1.8.8 3 2.9 3 5.6"/>',
+    bookmark: '<path d="M6 3h12v18l-6-4.5L6 21z"/>',
+  };
+  function icon(name, cls = '') {
+    return `<svg class="i ${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[name] || ''}</svg>`;
+  }
+
   const ESC = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
   const esc = (v) => String(v ?? '').replace(/[&<>"']/g, (c) => ESC[c]);
 
@@ -44,7 +78,7 @@
   }
 
   const FALLBACK_IMG = 'data:image/svg+xml,' + encodeURIComponent(
-    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#003b95"/><stop offset="1" stop-color="#4c8de0"/></linearGradient></defs><rect width="400" height="300" fill="url(#g)"/><text x="200" y="165" font-family="Arial" font-size="56" text-anchor="middle" fill="rgba(255,255,255,.85)">🏨</text></svg>`);
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#d9d4cb"/><stop offset="1" stop-color="#b9b2a6"/></linearGradient></defs><rect width="400" height="300" fill="url(#g)"/><g fill="none" stroke="rgba(255,255,255,.55)" stroke-width="2" stroke-linecap="round"><rect x="176" y="112" width="48" height="76" rx="3"/><path d="M192 188v-14h16v14M190 130h.01M200 130h.01M210 130h.01M190 146h.01M200 146h.01M210 146h.01M190 162h.01M200 162h.01M210 162h.01"/></g></svg>`);
   // Replace any broken image with a branded placeholder.
   document.addEventListener('error', (e) => {
     const t = e.target;
@@ -125,9 +159,9 @@
             <span class="avatar">${initial}</span><span>${esc(state.user.name.split(' ')[0])}</span>
           </button>
           <div class="user-dropdown hidden" id="user-dd" role="menu">
-            <a href="#/bookings" role="menuitem">🧳 Bookings &amp; trips</a>
-            <a href="#/wishlist" role="menuitem">♥ Saved</a>
-            <button type="button" id="logout-btn" role="menuitem">↪ Sign out</button>
+            <a href="#/bookings" role="menuitem">${icon('briefcase')} Bookings &amp; trips</a>
+            <a href="#/wishlist" role="menuitem">${icon('heart')} Saved</a>
+            <button type="button" id="logout-btn" role="menuitem">${icon('logout')} Sign out</button>
           </div>
         </div>`;
       const btn = $('#user-btn'), dd = $('#user-dd');
@@ -147,7 +181,7 @@
       const next = encodeURIComponent(currentPath());
       nav.innerHTML = `
         <a class="nav-link optional" href="#/manage">Manage booking</a>
-        <a class="btn-white" href="#/register?next=${next}">Register</a>
+        <a class="nav-link" href="#/register?next=${next}">Register</a>
         <a class="btn-white" href="#/login?next=${next}">Sign in</a>`;
     }
   }
@@ -163,23 +197,23 @@
     return `
       <form class="search-bar" id="search-form" autocomplete="off" role="search">
         <div class="field">
-          <span class="icon" aria-hidden="true">🛏️</span>
+          <span class="icon">${icon('pin')}</span>
           <label for="sb-q">Destination</label>
           <input id="sb-q" name="q" placeholder="Where are you going?" value="${esc(s.q || '')}" required />
           <div class="autocomplete hidden" id="sb-ac"></div>
         </div>
         <div class="field">
-          <span class="icon" aria-hidden="true">📅</span>
+          <span class="icon">${icon('calendar')}</span>
           <label for="sb-in">Check-in</label>
           <input id="sb-in" name="checkIn" type="date" min="${today()}" value="${esc(s.checkIn || '')}" />
         </div>
         <div class="field">
-          <span class="icon" aria-hidden="true">📅</span>
+          <span class="icon">${icon('calendar')}</span>
           <label for="sb-out">Check-out</label>
           <input id="sb-out" name="checkOut" type="date" min="${addDays(s.checkIn || today(), 1)}" value="${esc(s.checkOut || '')}" />
         </div>
         <div class="field">
-          <span class="icon" aria-hidden="true">👤</span>
+          <span class="icon">${icon('user')}</span>
           <label>Guests</label>
           <button type="button" class="guests-trigger" id="sb-guests-btn"></button>
           <div class="guests-pop hidden" id="sb-guests-pop">
@@ -188,7 +222,7 @@
             <button type="button" class="btn btn-outline btn-block" id="sb-guests-done">Done</button>
           </div>
         </div>
-        <button class="btn btn-primary" type="submit">Search</button>
+        <button class="btn btn-primary search-btn" type="submit">${icon('search')}<span>Search</span></button>
       </form>
       <div id="search-error"></div>`;
   }
@@ -236,7 +270,7 @@
       const list = dests.filter((d) => !term || d.city.toLowerCase().includes(term) || d.country.toLowerCase().includes(term)).slice(0, 7);
       acIndex = -1;
       if (!list.length) { ac.classList.add('hidden'); return; }
-      ac.innerHTML = list.map((d) => `<button type="button" data-city="${esc(d.city)}"><span>📍</span><span><strong>${esc(d.city)}</strong><br><span class="small muted">${esc(d.country)} · ${plural(d.properties, 'property', 'properties')}</span></span></button>`).join('');
+      ac.innerHTML = list.map((d) => `<button type="button" data-city="${esc(d.city)}"><span class="ac-icon">${icon('pin')}</span><span><strong>${esc(d.city)}</strong><br><span class="small muted">${esc(d.country)} · ${plural(d.properties, 'property', 'properties')}</span></span></button>`).join('');
       ac.classList.remove('hidden');
     }
     qIn.addEventListener('focus', showAc);
@@ -287,9 +321,8 @@
     try {
       await api(saved ? 'DELETE' : 'PUT', `/wishlist/${id}`);
       btn.classList.toggle('saved', !saved);
-      btn.textContent = saved ? '♡' : '♥';
       btn.setAttribute('aria-label', saved ? 'Save property' : 'Remove from saved');
-      toast(saved ? 'Removed from your saved list.' : 'Saved to your list ♥');
+      toast(saved ? 'Removed from your saved list.' : 'Saved to your list');
     } catch (err) { toast(err.message); }
   }
   // Close popovers when clicking elsewhere.
@@ -308,7 +341,7 @@
   });
 
   function heartHtml(h) {
-    return `<button type="button" class="heart ${h.saved ? 'saved' : ''}" data-hotel="${h.id}" aria-label="${h.saved ? 'Remove from saved' : 'Save property'}">${h.saved ? '♥' : '♡'}</button>`;
+    return `<button type="button" class="heart ${h.saved ? 'saved' : ''}" data-hotel="${h.id}" aria-label="${h.saved ? 'Remove from saved' : 'Save property'}">${icon('heart')}</button>`;
   }
 
   function stayQuery(s) {
@@ -320,23 +353,24 @@
   // ======================================================================
 
   const PROPERTY_TYPES = [
-    ['Hotel', '🏨'], ['Apartment', '🏢'], ['Resort', '🏝️'], ['Boutique Hotel', '✨'], ['Guesthouse', '🏡'], ['Hostel', '🛏️'],
+    ['Hotel', 'hotel'], ['Apartment', 'apartment'], ['Resort', 'resort'], ['Boutique Hotel', 'sparkles'], ['Guesthouse', 'home'], ['Hostel', 'bed'],
   ];
 
   async function viewHome() {
     const s = state.lastSearch;
     app.innerHTML = `
       <section class="hero"><div class="container">
-        <h1>Find your next stay</h1>
-        <p>Search low prices on hotels, homes and much more…</p>
+        <span class="eyebrow">Hotels · Apartments · Resorts</span>
+        <h1>Find a place<br>that feels <em>right.</em></h1>
+        <p>Thoughtfully chosen stays in sixteen cities — honest prices, no booking fees.</p>
       </div></section>
       <div class="container search-wrap">${searchBarHtml(s)}</div>
 
       <section class="section"><div class="container">
         <div class="usp">
-          <div class="card"><span class="emoji">💶</span><div><strong>Best price, no booking fees</strong><p class="muted small" style="margin:0">The price you see is the price you pay.</p></div></div>
-          <div class="card"><span class="emoji">🔄</span><div><strong>Free cancellation on most stays</strong><p class="muted small" style="margin:0">Plans change — look for the green label.</p></div></div>
-          <div class="card"><span class="emoji">⭐</span><div><strong>Real guest reviews</strong><p class="muted small" style="margin:0">Only guests who booked can leave a review.</p></div></div>
+          <div class="card"><span class="usp-icon">${icon('euro')}</span><div><strong>Best price, no booking fees</strong><p class="muted small" style="margin:0">The price you see is the price you pay.</p></div></div>
+          <div class="card"><span class="usp-icon">${icon('refresh')}</span><div><strong>Free cancellation on most stays</strong><p class="muted small" style="margin:0">Plans change — look for the green label.</p></div></div>
+          <div class="card"><span class="usp-icon">${icon('star')}</span><div><strong>Real guest reviews</strong><p class="muted small" style="margin:0">Only guests who booked can leave a review.</p></div></div>
         </div>
       </div></section>
 
@@ -349,7 +383,7 @@
       <section class="section" style="padding-top:0"><div class="container">
         <h2>Browse by property type</h2>
         <div class="grid-types">
-          ${PROPERTY_TYPES.map(([t, e]) => `<a class="type-card" href="#/search${qs({ types: t })}"><span class="emoji">${e}</span><strong>${esc(t)}s</strong></a>`).join('')}
+          ${PROPERTY_TYPES.map(([t, e]) => `<a class="type-card" href="#/search${qs({ types: t })}"><span class="type-icon">${icon(e)}</span><strong>${esc(t)}s</strong><span class="type-arrow">${icon('arrowRight')}</span></a>`).join('')}
         </div>
       </div></section>
 
@@ -370,7 +404,7 @@
       const dests = await loadDestinations();
       const grid = $('#dest-grid');
       if (!grid) return;
-      grid.innerHTML = dests.slice(0, 8).map((d) => `
+      grid.innerHTML = dests.slice(0, 9).map((d) => `
         <a class="dest-card" href="#/search${qs({ q: d.city, checkIn: s.checkIn, checkOut: s.checkOut, guests: s.guests, rooms: s.rooms })}">
           <img src="${esc(d.image)}" alt="${esc(d.city)}" loading="lazy" />
           <div class="dest-label"><strong>${esc(d.city)}</strong><span>${esc(d.country)} · ${plural(d.properties, 'property', 'properties')}</span></div>
@@ -393,7 +427,7 @@
     const selStars = listParam('stars'), selTypes = listParam('types'), selAmen = listParam('amenities');
 
     app.innerHTML = `
-      <div style="background:var(--brand);padding:16px 0 20px"><div class="container">${searchBarHtml(s)}</div></div>
+      <div class="search-band"><div class="container">${searchBarHtml(s)}</div></div>
       <div class="container"><div class="breadcrumbs"><a href="#/">Home</a> › Search results${s.q ? ' › ' + esc(s.q) : ''}</div></div>
       <div class="container results-layout">
         <aside class="filters" id="filters">
@@ -438,7 +472,7 @@
           <div class="results-head">
             <div><h1 style="font-size:22px;margin:0" id="results-title">Searching…</h1><div class="muted small" id="results-sub"></div></div>
             <div style="display:flex;gap:8px;align-items:center">
-              <button class="btn btn-outline filters-toggle" type="button" id="filters-toggle">⚙ Filters</button>
+              <button class="btn btn-outline filters-toggle" type="button" id="filters-toggle">${icon('sliders')} Filters</button>
               <label class="sr-only" for="sort">Sort by</label>
               <select id="sort">${SORTS.map(([v, l]) => `<option value="${v}" ${(p.sort || 'recommended') === v ? 'selected' : ''}>Sort by: ${l}</option>`).join('')}</select>
             </div>
@@ -476,7 +510,7 @@
         : 'Add your dates to see live availability and total prices.';
 
       if (!data.results.length) {
-        resultsEl.innerHTML = `<div class="empty card"><div class="emoji">🔍</div><h3>No properties match your search</h3><p class="muted">Try changing your dates, removing some filters or searching another destination.</p></div>`;
+        resultsEl.innerHTML = `<div class="empty card"><div class="empty-icon">${icon('search')}</div><h3>No properties match your search</h3><p class="muted">Try changing your dates, removing some filters or searching another destination.</p></div>`;
         return;
       }
       resultsEl.innerHTML = data.results.map((h) => hotelCardHtml(h, data, s)).join('') + paginationHtml(data);
@@ -511,16 +545,16 @@
           </div>
           <div class="small"><strong>${esc(h.cheapestRoom.name)}</strong><br><span class="muted">${esc(h.cheapestRoom.beds)}</span></div>
           <div class="tags">
-            ${h.freeCancellation ? '<span class="tag tag-green">✓ Free cancellation</span>' : '<span class="tag">Non-refundable</span>'}
-            ${h.breakfastIncluded ? '<span class="tag tag-green">☕ Breakfast included</span>' : ''}
-            <span class="tag tag-green">No prepayment needed</span>
+            ${h.freeCancellation ? `<span class="tag tag-green">${icon('check')} Free cancellation</span>` : '<span class="tag">Non-refundable</span>'}
+            ${h.breakfastIncluded ? `<span class="tag tag-green">${icon('coffee')} Breakfast included</span>` : ''}
+            <span class="tag">No prepayment needed</span>
           </div>
           ${data.stay && h.roomsLeft <= 3 ? `<div class="small red bold">Only ${plural(h.roomsLeft, 'room')} left at this price on our site</div>` : ''}
           <div class="small muted">${h.amenities.slice(0, 4).map(esc).join(' · ')}</div>
         </div>
         <div class="hotel-side">
           ${scoreHtml(h.rating, h.reviewCount)}
-          <div>${priceBlock}<a class="btn btn-primary" href="${link}" style="margin-top:8px">See availability ›</a></div>
+          <div>${priceBlock}<a class="btn btn-primary" href="${link}" style="margin-top:8px">See availability</a></div>
         </div>
       </article>`;
   }
@@ -543,7 +577,7 @@
     try {
       data = await api('GET', `/hotels/${encodeURIComponent(id)}` + stayQuery(s));
     } catch (err) {
-      app.innerHTML = `<div class="container section">${errorBox(err.message)}<a href="#/">← Back to home</a></div>`;
+      app.innerHTML = `<div class="container section">${errorBox(err.message)}<a class="back-link" href="#/">${icon('arrowLeft')} Back to home</a></div>`;
       return;
     }
     const h = data.hotel;
@@ -556,10 +590,10 @@
           <div>
             <div class="small muted">${esc(h.propertyType)} ${starsHtml(h.stars)}</div>
             <h1>${esc(h.name)}</h1>
-            <div class="small">📍 ${esc(h.address)} – <a href="#map">Show on map</a> · <span class="muted">${h.distanceKm} km from centre</span></div>
+            <div class="small address-line">${icon('pin')} ${esc(h.address)} · <a href="#map">Show on map</a> · <span class="muted">${h.distanceKm} km from centre</span></div>
           </div>
           <div style="display:flex;gap:8px;align-items:center">
-            <button type="button" class="heart ${h.saved ? 'saved' : ''}" data-hotel="${h.id}" style="position:static" aria-label="Save property">${h.saved ? '♥' : '♡'}</button>
+            <button type="button" class="heart ${h.saved ? 'saved' : ''}" data-hotel="${h.id}" style="position:static" aria-label="Save property">${icon('heart')}</button>
             <a class="btn btn-primary" href="#rooms">Reserve</a>
           </div>
         </div>
@@ -571,8 +605,8 @@
             <h3>Most popular facilities</h3>
             <ul class="amenity-list">${h.amenities.map((a) => `<li>${esc(a)}</li>`).join('')}</ul>
             <div class="tags">
-              ${h.freeCancellation ? '<span class="tag tag-green">✓ Free cancellation before check-in</span>' : '<span class="tag">Non-refundable rates</span>'}
-              ${h.breakfastIncluded ? '<span class="tag tag-green">☕ Breakfast included</span>' : ''}
+              ${h.freeCancellation ? `<span class="tag tag-green">${icon('check')} Free cancellation before check-in</span>` : '<span class="tag">Non-refundable rates</span>'}
+              ${h.breakfastIncluded ? `<span class="tag tag-green">${icon('coffee')} Breakfast included</span>` : ''}
             </div>
           </div>
           <aside>
@@ -582,7 +616,7 @@
             </div>
             <iframe id="map" class="map-frame" title="Map of ${esc(h.name)}" loading="lazy"
               src="https://www.openstreetmap.org/export/embed.html?bbox=${encodeURIComponent(bbox)}&layer=mapnik&marker=${h.lat},${h.lng}"></iframe>
-            <a class="small" target="_blank" rel="noopener" href="https://www.openstreetmap.org/?mlat=${h.lat}&mlon=${h.lng}#map=16/${h.lat}/${h.lng}">View larger map ↗</a>
+            <a class="small" target="_blank" rel="noopener" href="https://www.openstreetmap.org/?mlat=${h.lat}&mlon=${h.lng}#map=16/${h.lat}/${h.lng}">View larger map</a>
           </aside>
         </div>
 
@@ -657,18 +691,18 @@
       <tr class="${r.bookable ? '' : 'unavailable'}">
         <td>
           <div class="room-name">${esc(r.name)}</div>
-          <div class="small">🛏 ${esc(r.beds)} · ${r.sizeSqm} m²</div>
+          <div class="small room-facts"><span>${icon('bed')} ${esc(r.beds)}</span><span>${icon('ruler')} ${r.sizeSqm} m²</span></div>
           <div class="small muted">${esc(r.description)}</div>
         </td>
-        <td>${'👤'.repeat(Math.min(r.maxGuests, 4))}<div class="small muted">up to ${r.maxGuests}</div></td>
+        <td><span class="sleeps">${icon('users')} ${r.maxGuests}</span></td>
         <td>
           <div class="price-big" style="font-size:18px">${fmtMoney(data.stay ? r.totalPrice : r.pricePerNight)}</div>
           <div class="small muted">${data.stay ? `${fmtMoney(r.pricePerNight)} × ${plural(r.nights, 'night')}${data.rooms > 1 ? ` × ${data.rooms} rooms` : ''}` : 'per night, per room'}</div>
         </td>
         <td class="small">
-          ${h.freeCancellation ? '<div class="green bold">✓ Free cancellation</div>' : '<div>Non-refundable</div>'}
-          ${h.breakfastIncluded ? '<div class="green">☕ Breakfast included</div>' : '<div class="muted">Breakfast available on site</div>'}
-          <div class="green">✓ No prepayment needed</div>
+          ${h.freeCancellation ? `<div class="green bold perk">${icon('check')} Free cancellation</div>` : '<div>Non-refundable</div>'}
+          ${h.breakfastIncluded ? `<div class="green perk">${icon('coffee')} Breakfast included</div>` : '<div class="muted">Breakfast available on site</div>'}
+          <div class="green perk">${icon('check')} No prepayment needed</div>
           ${status}
         </td>
         <td><button type="button" class="btn btn-primary" data-room="${r.id}" ${data.stay && !r.bookable ? 'disabled' : ''}>Reserve</button></td>
@@ -746,7 +780,7 @@
 
   function stepsHtml(current) {
     const steps = ['Your selection', 'Your details', 'Booking confirmed'];
-    return `<div class="steps">${steps.map((s, i) => `${i ? '<span class="line"></span>' : ''}<span class="${i < current ? 'done' : i === current ? 'current' : ''}"><span class="step-num">${i < current ? '✓' : i + 1}</span>${s}</span>`).join('')}</div>`;
+    return `<div class="steps">${steps.map((s, i) => `${i ? '<span class="line"></span>' : ''}<span class="${i < current ? 'done' : i === current ? 'current' : ''}"><span class="step-num">${i < current ? icon('check') : i + 1}</span>${s}</span>`).join('')}</div>`;
   }
 
   async function viewBook(params) {
@@ -757,13 +791,13 @@
       if (!p.hotel || !p.room || !p.checkIn || !p.checkOut) throw new Error('Your booking selection is incomplete. Please choose a room again.');
       data = await api('GET', `/hotels/${encodeURIComponent(p.hotel)}` + stayQuery(p));
     } catch (err) {
-      app.innerHTML = `<div class="container section">${errorBox(err.message)}<a href="#/">← Back to home</a></div>`;
+      app.innerHTML = `<div class="container section">${errorBox(err.message)}<a class="back-link" href="#/">${icon('arrowLeft')} Back to home</a></div>`;
       return;
     }
     const h = data.hotel;
     const room = data.roomTypes.find((r) => String(r.id) === String(p.room));
     if (!room) {
-      app.innerHTML = `<div class="container section">${errorBox('That room could not be found.')}<a href="#/hotel/${h.id}">← Back to property</a></div>`;
+      app.innerHTML = `<div class="container section">${errorBox('That room could not be found.')}<a class="back-link" href="#/hotel/${h.id}">${icon('arrowLeft')} Back to property</a></div>`;
       return;
     }
     const u = state.user;
@@ -786,7 +820,7 @@
                 <div class="row"><div><div class="small muted">Check-in</div><strong>${fmtDate(data.stay.checkIn)}</strong><div class="small muted">From 15:00</div></div>
                   <div><div class="small muted">Check-out</div><strong>${fmtDate(data.stay.checkOut)}</strong><div class="small muted">Until 11:00</div></div></div>
                 <div style="margin-top:8px"><div class="small muted">Total length of stay:</div><strong>${plural(data.stay.nights, 'night')}</strong></div>
-                <hr style="border:0;border-top:1px solid var(--border)">
+                <hr class="divider">
                 <div class="small muted">You selected</div>
                 <strong>${data.rooms > 1 ? data.rooms + ' × ' : ''}${esc(room.name)}</strong> <span class="small">for ${plural(data.guests, 'guest')}</span>
                 <div><a href="#/hotel/${h.id}${stayQuery(p)}">Change your selection</a></div>
@@ -804,7 +838,7 @@
             <div class="card card-pad" style="margin-top:12px">
               <h4>Cancellation policy</h4>
               ${h.freeCancellation
-                ? `<p class="green small" style="margin:0">✓ Free cancellation any time before ${fmtDate(data.stay.checkIn)}.</p>`
+                ? `<p class="green small perk" style="margin:0">${icon('check')} Free cancellation any time before ${fmtDate(data.stay.checkIn)}.</p>`
                 : '<p class="small" style="margin:0">This is a non-refundable rate. The booking cannot be cancelled online.</p>'}
             </div>
           </aside>
@@ -872,11 +906,11 @@
       app.innerHTML = `
         <div class="container" style="max-width:820px">
           ${stepsHtml(3)}
-          <div class="confirm-hero"><span class="emoji">✅</span><div><h2 style="margin:0">Your booking in ${esc(b.city)} is confirmed.</h2><div>We've reserved your room at <strong>${esc(b.hotelName)}</strong>.</div></div></div>
+          <div class="confirm-hero"><span class="confirm-icon">${icon('check')}</span><div><h2 style="margin:0">Your booking in ${esc(b.city)} is confirmed.</h2><div>We've reserved your room at <strong>${esc(b.hotelName)}</strong>.</div></div></div>
           ${bookingDetailHtml(b)}
           <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:16px">
             ${state.user ? '<a class="btn btn-primary" href="#/bookings">Go to my bookings</a>' : '<a class="btn btn-primary" href="#/manage">Manage this booking</a>'}
-            <button class="btn btn-outline" type="button" onclick="window.print()">🖨 Print confirmation</button>
+            <button class="btn btn-outline" type="button" onclick="window.print()">${icon('printer')} Print confirmation</button>
             <a class="btn btn-outline" href="#/">Book another stay</a>
           </div>
         </div>`;
@@ -891,7 +925,7 @@
     return `
       <div class="card">
         <div class="card-pad" style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
-          <div><div class="small muted">Booking reference</div><div style="font-size:22px;font-weight:800;letter-spacing:1px">${esc(b.reference)}</div></div>
+          <div><div class="small muted">Booking reference</div><div class="ref-code">${esc(b.reference)}</div></div>
           <div style="text-align:right"><span class="status status-${cls}">${label}</span></div>
           <div><div class="small muted">Check-in</div><strong>${fmtDate(b.checkIn)}</strong></div>
           <div><div class="small muted">Check-out</div><strong>${fmtDate(b.checkOut)}</strong></div>
@@ -900,7 +934,7 @@
           <div><div class="small muted">Main guest</div><strong>${esc(b.firstName)} ${esc(b.lastName)}</strong><div class="small">${esc(b.email)}${b.phone ? ' · ' + esc(b.phone) : ''}</div></div>
           <div><div class="small muted">Total price</div><div class="price-big">${fmtMoney(b.totalPrice)}</div><div class="small muted">Pay at the property</div></div>
           ${b.specialRequests ? `<div style="grid-column:1/-1"><div class="small muted">Special requests</div>${esc(b.specialRequests)}</div>` : ''}
-          <div style="grid-column:1/-1" class="small ${b.freeCancellation ? 'green' : ''}">${b.freeCancellation ? '✓ Free cancellation before ' + fmtDate(b.checkIn) : 'Non-refundable booking'}</div>
+          <div style="grid-column:1/-1" class="small ${b.freeCancellation ? 'green' : ''}">${b.freeCancellation ? icon('check') + ' Free cancellation before ' + fmtDate(b.checkIn) : 'Non-refundable booking'}</div>
         </div>
       </div>`;
   }
@@ -921,7 +955,7 @@
       const { bookings } = await api('GET', '/bookings');
       const list = $('#bk-list');
       if (!bookings.length) {
-        list.innerHTML = `<div class="empty card"><div class="emoji">🧳</div><h3>Where to next?</h3><p class="muted">You haven't made any bookings yet. Once you do, they'll appear here.</p><a class="btn btn-primary" href="#/">Start searching</a></div>`;
+        list.innerHTML = `<div class="empty card"><div class="empty-icon">${icon('briefcase')}</div><h3>Where to next?</h3><p class="muted">You haven't made any bookings yet. Once you do, they'll appear here.</p><a class="btn btn-primary" href="#/">Start searching</a></div>`;
         return;
       }
       const upcoming = bookings.filter((b) => bookingStatus(b)[0] === 'confirmed').sort((a, b) => a.checkIn.localeCompare(b.checkIn));
@@ -989,7 +1023,7 @@
 
   async function viewWishlist() {
     if (!state.user) {
-      app.innerHTML = `<div class="container section"><div class="empty card"><div class="emoji">♥</div><h3>Save properties you love</h3><p class="muted">Sign in to create your saved list and access it from any device.</p><a class="btn btn-primary" href="#/login?next=%2Fwishlist">Sign in</a></div></div>`;
+      app.innerHTML = `<div class="container section"><div class="empty card"><div class="empty-icon">${icon('heart')}</div><h3>Save properties you love</h3><p class="muted">Sign in to create your saved list and access it from any device.</p><a class="btn btn-primary" href="#/login?next=%2Fwishlist">Sign in</a></div></div>`;
       return;
     }
     app.innerHTML = `<div class="container section"><h1>My saved properties</h1><div id="wl">${loader()}</div></div>`;
@@ -997,7 +1031,7 @@
       const { hotels } = await api('GET', '/wishlist');
       const el = $('#wl');
       if (!hotels.length) {
-        el.innerHTML = `<div class="empty card"><div class="emoji">♡</div><h3>Your list is empty</h3><p class="muted">Tap the heart on any property to save it here.</p><a class="btn btn-primary" href="#/">Explore properties</a></div>`;
+        el.innerHTML = `<div class="empty card"><div class="empty-icon">${icon('heart')}</div><h3>Your list is empty</h3><p class="muted">Tap the heart on any property to save it here.</p><a class="btn btn-primary" href="#/">Explore properties</a></div>`;
         return;
       }
       const s = state.lastSearch;
@@ -1076,7 +1110,7 @@
   }
 
   function viewNotFound() {
-    app.innerHTML = `<div class="container section"><div class="empty card"><div class="emoji">🧭</div><h2>Page not found</h2><p class="muted">The page you're looking for doesn't exist.</p><a class="btn btn-primary" href="#/">Go home</a></div></div>`;
+    app.innerHTML = `<div class="container section"><div class="empty card"><div class="empty-icon">${icon('compass')}</div><h2>Page not found</h2><p class="muted">The page you're looking for doesn't exist.</p><a class="btn btn-primary" href="#/">Go home</a></div></div>`;
   }
 
   // ======================================================================

@@ -16,7 +16,7 @@ There is no build step.
 - **Find my booking**: guests can look up and cancel a booking with its reference and email address.
 - **Saved properties** (wishlist) with the heart button.
 - **Reviews**: signed-in guests who booked a property can review it once.
-- Responsive layout for desktop and mobile.
+- Minimal, warm design: Manrope for interface text and Instrument Serif for headlines (Google Fonts), with inline SVG line icons. The layout adapts to desktop and mobile.
 
 > This is a demo. No payment is taken and no real reservations are made.
 
