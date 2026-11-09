@@ -45,6 +45,15 @@ On first start the database is created at `data/hotelsucher.db` and filled with 
 
 Environment variables: `PORT`, `DB_PATH` (path of the SQLite file) and `NODE_ENV=production` (marks the session cookie as `Secure`).
 
+## Deploy (free)
+
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/iamkrish001/Booking.com)
+
+The button uses `render.yaml` to create a free Node web service. On the free plan the service
+sleeps after about 15 minutes without visits; the next visit takes up to a minute to wake it.
+The disk is not permanent either, so accounts and bookings reset when the service restarts or redeploys.
+The demo hotels are re-created automatically.
+
 ## Project structure
 
 ```

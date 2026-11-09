@@ -1,0 +1,15 @@
+# Render Blueprint: one-click deploy of HotelSucher as a free web service.
+# https://render.com/docs/blueprint-spec
+services:
+  - type: web
+    name: hotelsucher
+    runtime: node
+    plan: free
+    buildCommand: npm ci
+    startCommand: npm start
+    healthCheckPath: /api/destinations
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: NODE_ENV
+        value: production
