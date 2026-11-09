@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HotelSucher – Find and book hotels, apartments and more</title>
+  <meta name="description" content="HotelSucher: search hotels, compare prices and book your next stay in seconds." />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23003b95'/%3E%3Ctext x='16' y='23' font-family='Arial' font-weight='700' font-size='18' text-anchor='middle' fill='white'%3EH%3C/text%3E%3Ccircle cx='25' cy='23' r='3' fill='%23febb02'/%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-row">
+      <a href="#/" class="logo" aria-label="HotelSucher home">Hotel<span>Sucher</span><i>.</i></a>
+      <nav class="header-nav" id="header-nav" aria-label="Account"></nav>
+    </div>
+    <div class="container header-tabs">
+      <a href="#/" class="tab active">🛏️ Stays</a>
+      <a href="#/manage" class="tab">🔎 Find my booking</a>
+      <a href="#/wishlist" class="tab">♥ Saved</a>
+    </div>
+  </header>
+
+  <main id="app" tabindex="-1"></main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div>
+        <div class="logo logo-dark">Hotel<span>Sucher</span><i>.</i></div>
+        <p class="muted">Find your perfect stay — hotels, apartments, hostels and more, all in one place.</p>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <a href="#/search?q=Berlin">Berlin</a>
+        <a href="#/search?q=Paris">Paris</a>
+        <a href="#/search?q=Tokyo">Tokyo</a>
+        <a href="#/search?q=Kathmandu">Kathmandu</a>
+      </div>
+      <div>
+        <h4>Your trips</h4>
+        <a href="#/bookings">My bookings</a>
+        <a href="#/manage">Find a booking</a>
+        <a href="#/wishlist">Saved properties</a>
+      </div>
+      <div>
+        <h4>Support</h4>
+        <a href="#/help">Help centre</a>
+        <a href="#/help">Cancellation policy</a>
+        <a href="#/help">Privacy &amp; cookies</a>
+      </div>
+    </div>
+    <div class="container footer-bottom muted">© <span id="year"></span> HotelSucher. Demo project — no real reservations are made.</div>
+  </footer>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="/js/app.js"></script>
+</body>
+</html>
