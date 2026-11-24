@@ -3,6 +3,10 @@
 A hotel search and booking website, inspired by sites like Booking.com. It is a full-stack app:
 a Node.js + Express API, a SQLite database and a single-page front-end in plain JavaScript.
 There is no build step.
+# Visit the Site 
+https://hotelsucher-t1r5.onrender.com/#/
+
+
 
 ## Features
 
